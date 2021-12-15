@@ -109,3 +109,59 @@ def onset_detect(x,blocksize,hopsize,fs):
     idx_del = np.where(peaks_time<0.05)[0]
     new_peaks = np.delete(peaks,idx_del)
     return new_peaks
+def evaluation(fullpath_txt,fullpath_aud):
+    txt = []
+    f = []
+    p = []
+    r = []
+    ev=[]
+    for file in os.listdir(fullpath_txt):
+                txt.append(fullpath_txt+file)
+    aud = []
+    for file in os.listdir(fullpath_aud):
+                aud.append(fullpath_aud+file)
+    for i,k in zip(txt,aud):
+        gnd = np.genfromtxt(i,skip_header=4,skip_footer=1)
+        if (gnd.size == 0):
+            with open(i) as f:
+                lines = np.array(f.readlines())
+                lines = lines[4:-1]
+                tmp = [data.split(' ') for data in lines]
+                gnd_onset = [i[0] for i in tmp]
+                gnd_onset = np.asarray(gnd_onset)
+                gnd_dur = [i[1] for i in tmp]
+                gnd_dur = np.asarray(gnd_dur)
+                gnd_offset = gnd_onset+gnd_dur
+                gnd_truth = np.array([])
+                for i,j in enumerate(zip(gnd_onset,gnd_offset)):
+                    gnd_truth = np.append(gnd_truth,j[0]) 
+                    gnd_truth = np.append(gnd_truth,j[1]) 
+        else:        
+            gnd_onset = gnd[:,0]
+            gnd_offset = gnd[:,1]+gnd[:,0]
+            gnd_truth = np.array([])
+            for i,j in enumerate(zip(gnd_onset,gnd_offset)):
+                gnd_truth = np.append(gnd_truth,j[0]) 
+                gnd_truth = np.append(gnd_truth,j[1]) 
+        gnd_truth = np.sort(gnd_truth, axis=None)         
+        fs, x = ToolReadAudio(k)
+        peaks = onset_detect(x,512,256,fs)
+        ev.append(mir_eval.onset.evaluate(gnd_truth,peaks/fs))
+        
+    return ev
+def run_evaluation(fullpath_txt,fullpath_aud): 
+    a =evaluation(fullpath_txt,fullpath_aud)
+    f = np.array([])
+    p = np.array([])
+    r = np.array([])
+    for i in a:
+        f = np.append(f,i['F-measure'])
+        p = np.append(p,i['Precision'])
+        r = np.append(r,i['Recall'])
+    print('F-measure')
+    print(np.mean(f))
+    print('Precision')
+    print(np.mean(p))
+    print('Recall')
+    print(np.mean(r))
+
