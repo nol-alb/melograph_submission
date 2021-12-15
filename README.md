@@ -4,6 +4,10 @@ This repository holds code for the  MUSI-6201 (Audio Content Analysis) project s
 \
 **Goal:** Automatic Note Segmetation of Monophonic Melodies and Graph Representation of the Note-to-Note Sequences
 
+## Working Example 
+![alt text](https://github.com/nol-alb/melograph_submission/blob/main/images/Transcript.png)
+
+
 
 ## Code Organization 
 - Baseline_Implementation contains code from our Baseline Report
