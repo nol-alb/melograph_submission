@@ -11,7 +11,7 @@ The Web Application is Self Contained within the directory WebApp
 cd ..<Clone Repository>
 pip install -r requirements.txt
 cd WebApp
-export FLASK_APP = app
+export FLASK_APP=app
 flask run
 ```
 
