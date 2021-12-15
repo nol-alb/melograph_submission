@@ -7,8 +7,6 @@ This repository holds code for the  MUSI-6201 (Audio Content Analysis) project s
 ## Working Example 
 Input Melody
 ![alt text](https://github.com/nol-alb/melograph_submission/blob/main/images/Transcript.png)
-\
-
 Graph Output
 ![alt text](https://github.com/nol-alb/melograph_submission/blob/main/images/Graph.png)
 
