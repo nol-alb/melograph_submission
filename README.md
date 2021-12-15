@@ -7,13 +7,13 @@ This repository holds code for the  MUSI-6201 (Audio Content Analysis) project s
 
 ## Running the Web Applicaton
 The Web Application is Self Contained within the directory WebApp
-'''
+```
 cd ..<Clone Repository>
 pip install -r requirements.txt
 cd WebApp
 export FLASK_APP = app
 flask run
-'''
+```
 
 
 
