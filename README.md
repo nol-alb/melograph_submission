@@ -1,5 +1,7 @@
 # MeloGraph
 This repository holds code for the  MUSI-6201 (Audio Content Analysis) project submission of group 3 (Noel Alben, Rhythm Jain and Thiago Roque).
+**Goal:** Automatic Note Segmetation of Monophonic Melodies and Graph Representation of the Note-to-Note Sequences
+
 
 ## Code Organization 
 - Baseline_Implementation contains code from our Baseline Report
