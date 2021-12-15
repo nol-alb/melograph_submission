@@ -24,9 +24,10 @@ def make_graph():
     for i in a:
         midi.append(midi_to_note(i))
     notes = np.asarray(midi)
-    print(notes)
+    first_note=notes[0]
+    last_note=notes[-1]
     swaras, counts=np.unique(notes, return_counts=True)
-
+    print(swaras, counts)
     trans = []
     trans2 = []
     for i,j in enumerate(notes):
@@ -51,23 +52,30 @@ def make_graph():
     for i in notes:
         dic[i] = counts[np.where(swaras==i)[0][0]]
     _, idx = np.unique(notes, return_index=True)
+    
+    
+    for i in dic:
+        if dic[i]*10 < 30:
+            dic[i]=3
+    
+    counts=counts.tolist()
+    print(dic)
     swaras = notes[np.sort(idx)]
 
     data = {"nodes": [], "edges": []}
 
     for i in range(len(swaras)):
             
-            if i == 0:
-                data["nodes"].append({ 'data': { 'id': str(swaras[i]), 'name': str(swaras[i]), 'type':'rectangle', 'weight': int(counts[i]*10), 'color' : 'red' }})
-            elif i == len(swaras)-1:
-                data["nodes"].append({ 'data': { 'id': str(swaras[i]), 'name': str(swaras[i]), 'type':'rectangle', 'weight': int(counts[i]*10), 'color' : 'blue' }})
+            if swaras[i] == first_note:
+                data["nodes"].append({ 'data': { 'id': str(swaras[i]), 'name': str(swaras[i]), 'type':'rectangle', 'weight': int(dic[swaras[i]]*10), 'color' : 'red' }})
+            elif swaras[i] == last_note:
+                data["nodes"].append({ 'data': { 'id': str(swaras[i]), 'name': str(swaras[i]), 'type':'rectangle', 'weight': int(dic[swaras[i]]*10), 'color' : 'blue' }})
             else:
-                data["nodes"].append({ 'data': { 'id': swaras[i], 'name': swaras[i], 'weight': counts[i]*10, 'color': '#a38344' }})
+                data["nodes"].append({ 'data': { 'id': swaras[i], 'name': swaras[i], 'weight': int(dic[swaras[i]]*10), 'color': '#a38344' }})
 
     for j in range(len(trans2)):
         if trans2[j][0] in swaras and trans2[j][1] in swaras:
             weight = trans2[j][0]+trans2[j][1]
             data["edges"].append({'data': { 'source': trans2[j][0], 'target': trans2[j][1], 'weight': trans_dic[weight] }})
-
     with open("data.json", "w") as f3:
             json.dump(data, f3)

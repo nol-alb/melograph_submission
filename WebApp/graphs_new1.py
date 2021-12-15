@@ -24,8 +24,6 @@ def make_graph():
     pitches =[] 
     for i in a:
         pitches.append(midi_to_note(i))
-    print(pitches)
-    # print("pitsches:", pitches)
 
     with open("temp.txt", "w") as f2:
         for ele in pitches:
@@ -36,7 +34,6 @@ def make_graph():
 
     df=pd.read_csv(path, sep='\n', header=None)
     df.columns=["transitions", "weights"]
-    # display(df)
     tr_str=np.array(df["transitions"])
     tr=[]
     for j in range(len(tr_str)):
@@ -48,14 +45,9 @@ def make_graph():
     withcomma=[]
     for ind in range(len(tr)):
         withcomma.append((tr[ind][0].split(" ")))
-    # print("withcomma:",withcomma)
     swaras, counts=np.unique(np.array(withcomma).flatten(), return_counts=True)
-    # print(counts[7])
     counts[(counts*10)<30]=3
     counts=counts.tolist()
-
-
-    # print("swaras: ",swaras)
 
     data = {"nodes": [], "edges": []}
 

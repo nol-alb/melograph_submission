@@ -15,6 +15,7 @@
         position: absolute;
         top: 0px;
         left: 0px;
+
         }
     </style>
 </head>
@@ -28,13 +29,10 @@
     <div class="row">
     </div>
     <div class="row" style="height: 1000pt">
-        <!-- <div class="col col-lg-1"></div> -->
         <div class="col col-lg-12">
             <div id="cy"></div>
         </div>
-        <!-- <div class="col col-lg-1"></div> -->
     </div>
-    <!-- <script type="text/json" src="/Users/rhythmjain/Desktop/GTStuff/1-2/AudioContent/melograph/graphFinal/melograph/WebApp/templates/data.json"></script> -->
     <script type="text/javascript">
     path = 'data.json'
 
@@ -42,8 +40,6 @@
         .then(response => response.json())
         .then(data => {
             console.log(data)
-
-            console.log("Within function")
             node = data["nodes"]
             console.log(node);
             edges = data["edges"]
@@ -68,10 +64,11 @@
                         selector: "edge",
                         style: {
                             width: 'data(weight)',
-                            "target-arrow-shape": "triangle",
+                            // "target-arrow-shape": "triangle",
                             'line-color': 'black',
-                            'target-arrow-color': 'black',
-                            'source-arrow-color': 'black',
+                            'mid-target-arrow-color': 'black',
+                            'mid-source-arrow-color': 'black',
+                            'mid-target-arrow-shape': 'triangle-backcurve',
 
                         }
                     },
@@ -80,8 +77,8 @@
                         'css': {
                             'background-color': 'black',
                             'line-color': 'black',
-                            'target-arrow-color': 'black',
-                            'source-arrow-color': 'black',
+                            'mid-target-arrow-color': 'black',
+                            'mid-source-arrow-color': 'black',
                             'text-outline-color': 'black'
                         }
                     }
@@ -127,13 +124,12 @@
                 numIter: 1000,
                 initialTemp: 200,
                 coolingFactor: 0.95,
-                minTemp: 1.0
+                minTemp: 1.0, 
             }).run();
             cy.style()
                 .selector('node')
                 .style('border', '100pt')
 
-            console.log("after running")
         })
     </script>
 </body>
