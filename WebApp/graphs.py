@@ -3,7 +3,6 @@ import glob
 import json
 import subprocess
 import numpy as np
-import networkx as nx
 import math
 import matplotlib.pyplot as plt
 
@@ -59,7 +58,6 @@ def make_graph():
             dic[i]=3
     
     counts=counts.tolist()
-    print(dic)
     swaras = notes[np.sort(idx)]
 
     data = {"nodes": [], "edges": []}
