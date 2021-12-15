@@ -15,7 +15,104 @@
         position: absolute;
         top: 0px;
         left: 0px;
-
+        }
+        .wrapper{
+          display: inline-flex;
+          background: #fff;
+          height: 100px;
+          width: 400px;
+          align-items: center;
+          justify-content: space-evenly;
+          border-radius: 5px;
+          padding: 20px 15px;
+          box-shadow: 5px 5px 30px rgba(0,0,0,0.2);
+        }
+        .wrapper .option{
+          background: #fff;
+          height: 100%;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          margin: 0 10px;
+          border-radius: 5px;
+          cursor: pointer;
+          padding: 0 10px;
+          border: 2px solid lightgrey;
+          transition: all 0.3s ease;
+        }
+        .wrapper .option .dot{
+          height: 20px;
+          width: 20px;
+          background: #d9d9d9;
+          border-radius: 50%;
+          position: relative;
+        }
+        .wrapper .option .dot::before{
+          position: absolute;
+          content: "";
+          top: 4px;
+          left: 4px;
+          width: 12px;
+          height: 12px;
+          background: #a38344;
+          border-radius: 50%;
+          opacity: 0;
+          transform: scale(1.5);
+          transition: all 0.3s ease;
+        }
+        input[type="radio"]{
+          display: none;
+        }
+        #option-1:checked:checked ~ .option-1,
+        #option-2:checked:checked ~ .option-2{
+          border-color: #a38344;
+          background: #a38344;
+        }
+        #option-3:checked:checked ~ .option-3{
+          border-color: #a38344;
+          background: #a38344;
+        }
+        #option-4:checked:checked ~ .option-4{
+          border-color: #a38344;
+          background: #a38344;
+        }
+        #option-1:checked:checked ~ .option-1 .dot,
+        #option-2:checked:checked ~ .option-2 .dot{
+          background: #fff;
+        }
+        #option-3:checked:checked ~ .option-3 .dot{
+          background: #fff;
+        }
+        #option-4:checked:checked ~ .option-4 .dot{
+          background: #fff;
+        }
+        #option-1:checked:checked ~ .option-1 .dot::before,
+        #option-2:checked:checked ~ .option-2 .dot::before{
+          opacity: 1;
+          transform: scale(1);
+        }
+        #option-3:checked:checked ~ .option-3 .dot::before{
+          opacity: 1;
+          transform: scale(1);
+        }
+        #option-4:checked:checked ~ .option-4 .dot::before{
+          opacity: 1;
+          transform: scale(1);
+        }
+        .wrapper .option span{
+          font-size: 20px;
+          color: #808080;
+        }
+        #option-1:checked:checked ~ .option-1 span,
+        #option-2:checked:checked ~ .option-2 span{
+          color: #fff;
+        }
+        #option-3:checked:checked ~ .option-3 span{
+          color: #fff;
+        }
+        #option-4:checked:checked ~ .option-4 span{
+          color: #fff;
         }
     </style>
 </head>
@@ -26,12 +123,38 @@
             <center>Rendered graph</center>
         </h3>
     </div>
-    <div class="row">
-    </div>
-    <div class="row" style="height: 1000pt">
+    <div class="row"></div>
+    <div class="row" style="height: 500pt">
         <div class="col col-lg-12">
             <div id="cy"></div>
         </div>
+    </div>
+    <div class="row">
+        <div class=" col col-lg-2"></div>
+        <div class="wrapper col col-lg-8">
+            <input type="radio" name="layout" value="grid" id="option-1" checked>
+            <input type="radio" name="layout" value="circle" id="option-2">
+            <input type="radio" name="layout" value="breadthfirst" id="option-3">
+            <input type="radio" name="layout" value="random" id="option-4">
+
+            <label for="option-1" class="option option-1">
+                <div class="dot"></div>
+                <span>Grid</span>
+            </label>
+            <label for="option-2" class="option option-2">
+                <div class="dot"></div>
+                <span>Circle</span>
+            </label>
+            <label for="option-3" class="option option-3">
+                <div class="dot"></div>
+                <span>Breadth First</span>
+            </label>
+            <label for="option-4" class="option option-4">
+                <div class="dot"></div>
+                <span>Random</span>
+            </label>
+        </div>
+        <div class=" col col-lg-2"></div>
     </div>
     <script type="text/javascript">
     path = 'data.json'
@@ -64,7 +187,6 @@
                         selector: "edge",
                         style: {
                             width: 'data(weight)',
-                            // "target-arrow-shape": "triangle",
                             'line-color': 'black',
                             'mid-target-arrow-color': 'black',
                             'mid-source-arrow-color': 'black',
@@ -88,13 +210,12 @@
                     edges: edges
                 },
                 layout: {
-                    name: 'cose',
+                    name: 'grid',
                     idealEdgeLength: 100,
                     nodeOverlap: 20,
                     refresh: 20,
                     fit: true,
-                    padding: 30,
-                    randomize: false,
+                    padding: 20,
                     componentSpacing: 100,
                     nodeRepulsion: 400000,
                     edgeElasticity: 100,
@@ -103,18 +224,29 @@
                     numIter: 1000,
                     initialTemp: 200,
                     coolingFactor: 0.95,
-                    minTemp: 1.0
+                    minTemp: 1.0,
+                    randomize: true,
+                    animate: 'end',
+                    animationEasing: 'ease-out',
+                    animationDuration: 1000,
                 },
             });
-
-
+            $("input:radio[name=layout]").click(function() {
+                var layout = cy.layout({
+                    name: $(this).val(),
+                    animate: true,
+                    animationDuration: 1000,
+                    animationEasing: 'ease-out'
+                });
+                layout.run();
+            });
             cy.layout({
-                name: 'cose',
+                name: 'grid',
                 idealEdgeLength: 100,
                 nodeOverlap: 20,
                 refresh: 20,
                 fit: true,
-                padding: 30,
+                padding: 20,
                 randomize: false,
                 componentSpacing: 100,
                 nodeRepulsion: 400000,
@@ -124,13 +256,16 @@
                 numIter: 1000,
                 initialTemp: 200,
                 coolingFactor: 0.95,
-                minTemp: 1.0, 
+                minTemp: 1.0,
+                animate: 'end',
+                animationEasing: 'ease-out',
+                animationDuration: 1000,
             }).run();
             cy.style()
                 .selector('node')
                 .style('border', '100pt')
-
-        })
+            
+                })
     </script>
 </body>
 

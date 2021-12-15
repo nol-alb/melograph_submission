@@ -37,7 +37,7 @@ def melograph_upload():
             print(Audio)
             Audio.save(os.path.join(app.config['Audio_Uploads'],'audio.wav'))
 
-            return redirect(url_for('melograph_analyze'))
+            return redirect(url_for('melograph_analyze'), code=307)
     else:
         return render_template('melograph.html')
 
@@ -49,7 +49,6 @@ def melograph_analyze():
         #HPSS, NCCF, graph
         ## Considering we have a nodes and edges array
         data = make_graph()
-        #print(data)
         return render_template('analysis.html', data=data)
     else:
         return render_template('analysis.html')

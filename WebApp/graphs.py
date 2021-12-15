@@ -1,10 +1,5 @@
-import os
-import glob
 import json
-import subprocess
 import numpy as np
-import math
-import matplotlib.pyplot as plt
 
 def midi_to_note(midi):
     notes = np.array(['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'])
@@ -54,8 +49,8 @@ def make_graph():
     
     
     for i in dic:
-        if dic[i]*10 < 30:
-            dic[i]=3
+        if dic[i]*10 < 50:
+            dic[i]=5
     
     counts=counts.tolist()
     swaras = notes[np.sort(idx)]
@@ -63,17 +58,16 @@ def make_graph():
     data = {"nodes": [], "edges": []}
 
     for i in range(len(swaras)):
-            
-            if swaras[i] == first_note:
-                data["nodes"].append({ 'data': { 'id': str(swaras[i]), 'name': str(swaras[i]), 'type':'rectangle', 'weight': int(dic[swaras[i]]*10), 'color' : 'red' }})
-            elif swaras[i] == last_note:
-                data["nodes"].append({ 'data': { 'id': str(swaras[i]), 'name': str(swaras[i]), 'type':'rectangle', 'weight': int(dic[swaras[i]]*10), 'color' : 'blue' }})
-            else:
-                data["nodes"].append({ 'data': { 'id': swaras[i], 'name': swaras[i], 'weight': int(dic[swaras[i]]*10), 'color': '#a38344' }})
+        if swaras[i] == first_note:
+            data["nodes"].append({ 'data': { 'id': str(swaras[i]), "type": "round-rectangle", 'name': str(swaras[i]), 'weight': int(dic[swaras[i]]*5), 'color' : '#204b53' }})
+        elif swaras[i] == last_note:
+            data["nodes"].append({ 'data': { 'id': str(swaras[i]), "type": "round-rectangle", 'name': str(swaras[i]), 'weight': int(dic[swaras[i]]*5), 'color' : 'teal' }})
+        else:
+            data["nodes"].append({ 'data': { 'id': swaras[i], 'name': swaras[i], 'weight': int(dic[swaras[i]]*5), 'color': '#a38344' }})
 
     for j in range(len(trans2)):
         if trans2[j][0] in swaras and trans2[j][1] in swaras:
             weight = trans2[j][0]+trans2[j][1]
             data["edges"].append({'data': { 'source': trans2[j][0], 'target': trans2[j][1], 'weight': trans_dic[weight] }})
     with open("data.json", "w") as f3:
-            json.dump(data, f3)
+        json.dump(data, f3)
