@@ -10,7 +10,7 @@ def midi_to_note(midi):
     return note
 
 def make_graph():
-    with open('notes/test.npy', 'rb') as f1:
+    with open('notes/test1.npy', 'rb') as f1:
         a = np.load(f1)
     a = a.astype('int')
     midi = []
@@ -59,9 +59,9 @@ def make_graph():
 
     for i in range(len(swaras)):
         if swaras[i] == first_note:
-            data["nodes"].append({ 'data': { 'id': str(swaras[i]), "type": "round-rectangle", 'name': str(swaras[i]), 'weight': int(dic[swaras[i]]*5), 'color' : '#204b53' }})
+            data["nodes"].append({ 'data': { 'id': str(swaras[i]), "type": "round-rectangle", 'name': str(swaras[i]), 'weight': int(dic[swaras[i]]*5), 'color' : '#8f3b1b' }})
         elif swaras[i] == last_note:
-            data["nodes"].append({ 'data': { 'id': str(swaras[i]), "type": "round-rectangle", 'name': str(swaras[i]), 'weight': int(dic[swaras[i]]*5), 'color' : 'teal' }})
+            data["nodes"].append({ 'data': { 'id': str(swaras[i]), "type": "round-rectangle", 'name': str(swaras[i]), 'weight': int(dic[swaras[i]]*5), 'color' : '#f18973' }})
         else:
             data["nodes"].append({ 'data': { 'id': swaras[i], 'name': swaras[i], 'weight': int(dic[swaras[i]]*5), 'color': '#a38344' }})
 

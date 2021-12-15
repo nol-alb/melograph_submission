@@ -77,6 +77,10 @@
           border-color: #a38344;
           background: #a38344;
         }
+        /*#png-eg:checked:checked ~ .png-eg{
+          border-color: #a38344;
+          background: #a38344;
+        }*/
         #option-1:checked:checked ~ .option-1 .dot,
         #option-2:checked:checked ~ .option-2 .dot{
           background: #fff;
@@ -87,6 +91,9 @@
         #option-4:checked:checked ~ .option-4 .dot{
           background: #fff;
         }
+        /*#png-eg:checked:checked ~ .png-eg .dot{
+          background: #fff;
+        }*/
         #option-1:checked:checked ~ .option-1 .dot::before,
         #option-2:checked:checked ~ .option-2 .dot::before{
           opacity: 1;
@@ -100,6 +107,10 @@
           opacity: 1;
           transform: scale(1);
         }
+        /*#png-eg:checked:checked ~ .png-eg .dot::before{
+          opacity: 1;
+          transform: scale(1);
+        }*/
         .wrapper .option span{
           font-size: 20px;
           color: #808080;
@@ -114,6 +125,9 @@
         #option-4:checked:checked ~ .option-4 span{
           color: #fff;
         }
+    /*    #png-eg:checked:checked ~ .png-eg span{
+          color: #fff;
+        }*/
     </style>
 </head>
 
@@ -129,6 +143,9 @@
             <div id="cy"></div>
         </div>
     </div>
+    <h4>
+        <center>Choose a layout</center>
+    </h4>
     <div class="row">
         <div class=" col col-lg-2"></div>
         <div class="wrapper col col-lg-8">
@@ -136,7 +153,6 @@
             <input type="radio" name="layout" value="circle" id="option-2">
             <input type="radio" name="layout" value="breadthfirst" id="option-3">
             <input type="radio" name="layout" value="random" id="option-4">
-
             <label for="option-1" class="option option-1">
                 <div class="dot"></div>
                 <span>Grid</span>
@@ -155,6 +171,13 @@
             </label>
         </div>
         <div class=" col col-lg-2"></div>
+    </div>
+    <div class="row">
+        <!--  <div class="col col-lg-5"></div>
+        <div class=" col col-lg-2 wrapper">
+            <input type="button" value="Download" id="png-eg">
+        </div> -->
+        <div class="col col-lg-5"></div>
     </div>
     <script type="text/javascript">
     path = 'data.json'
@@ -264,8 +287,10 @@
             cy.style()
                 .selector('node')
                 .style('border', '100pt')
-            
-                })
+
+
+
+        })
     </script>
 </body>
 
